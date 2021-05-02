@@ -2,12 +2,14 @@ import { Divider } from 'antd';
 import React from 'react';
 import { ASSIGNTOYOU, IMPORTANT, MYDAY, PLANNED, TASKS } from '../constant';
 import { useTodoContextValue } from '../TodoContext';
-import SideBarMenuComponent from './SideBarMenuComponent';
+import SearchTaskComponent from './SearchTaskComponent/SearchTaskComponent';
+import SideBarMenuComponent from './SideBarMenuComponent/SideBarMenuComponent';
 
 const SideBarMenuListComponent = () => {
-  const { todoList, todoImpList } = useTodoContextValue();
+  const { todoList, todoImpList, todoTaskList } = useTodoContextValue();
   return (
     <div className='sidebarMenu'>
+      <SearchTaskComponent />
       <ul>
         <li>
           <SideBarMenuComponent name={MYDAY} list={todoImpList} />
@@ -22,10 +24,12 @@ const SideBarMenuListComponent = () => {
           <SideBarMenuComponent name={ASSIGNTOYOU} list={todoImpList} />
         </li>
         <li>
-          <SideBarMenuComponent name={TASKS} list={todoImpList} />
+          <SideBarMenuComponent name={TASKS} list={todoTaskList} />
         </li>
       </ul>
-      <Divider style={{ background: '#000' }} />
+      <div style={{ paddingLeft: '15px', paddingRight: '15px' }}>
+        <Divider style={{ background: '#000' }} />
+      </div>
     </div>
   );
 };

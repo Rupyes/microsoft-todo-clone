@@ -7,11 +7,12 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import React from 'react';
-import { ASSIGNTOYOU, IMPORTANT, MYDAY, PLANNED, TASKS } from '../constant';
+import { ASSIGNTOYOU, IMPORTANT, MYDAY, PLANNED, TASKS } from '../../constant';
+import './SideBarMenuStyle.css';
 
 const SideBarMenuComponent = ({ name, list }) => {
   return (
-    <div>
+    <div className='menu'>
       {name === IMPORTANT ? (
         <StarOutlined className='menu_icon' />
       ) : name === ASSIGNTOYOU ? (

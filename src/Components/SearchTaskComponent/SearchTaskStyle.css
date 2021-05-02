@@ -1,0 +1,29 @@
+.inputGroup {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.searchRow {
+  background-color: azure;
+  border-radius: 5px;
+  display: flex;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.inputIcon {
+  padding-left: 10px;
+}
+
+.inputSearch {
+  flex: 1;
+}
+
+.inputSearch input {
+  background: none;
+}
+
+.inputSearch input:focus {
+  outline: none;
+}

@@ -2,12 +2,21 @@ import React from 'react';
 import { useTodoContextValue } from '../TodoContext';
 import TodoComponet from './TodoComponet';
 
-const TodosComponent = ({ isCompletedList }) => {
-  const { todoList, toggleImportant, taskCompleted } = useTodoContextValue();
+const TodosComponent = ({ isCompletedList, searchList }) => {
+  const {
+    todoList,
+    toggleImportant,
+    taskCompleted,
+    getSearchedTodos,
+  } = useTodoContextValue();
+  let displayList = todoList;
+  if (searchList) {
+    displayList = getSearchedTodos();
+  }
   return (
     <div>
-      {todoList &&
-        todoList
+      {displayList &&
+        displayList
           .filter((todo) => todo['isChecked'] === isCompletedList)
           .map((td) => (
             <TodoComponet

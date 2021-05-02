@@ -34,6 +34,7 @@ const AddTodoComponent = () => {
           placeholder='Add a Task'
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          onPressEnter={() => added(task)}
         />
       </Col>
     </Row>

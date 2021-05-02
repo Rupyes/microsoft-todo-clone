@@ -5,23 +5,11 @@
 
 .sidebarMenu ul li {
   list-style: none;
-  display: flex;
-  margin-bottom: 2px;
-  padding: 2px;
-  align-items: center;
 }
 
-.menu_icon {
-  flex: 0;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.menu_label {
-  flex: 1;
-}
-.task_count {
-  padding-left: 5px;
-  padding-right: 5px;
+.sidebarMenu ul li:hover {
+  background-color: aliceblue;
+  cursor: pointer;
 }
 
 .completedBadge {
