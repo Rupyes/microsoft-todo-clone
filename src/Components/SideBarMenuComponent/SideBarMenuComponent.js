@@ -8,9 +8,10 @@ import {
 } from '@ant-design/icons';
 import React from 'react';
 import { ASSIGNTOYOU, IMPORTANT, MYDAY, PLANNED, TASKS } from '../../constant';
+import { useSelectedMenuValue } from '../../context/SelectedMenuContext';
 import './SideBarMenuStyle.css';
 
-const SideBarMenuComponent = ({ name, list }) => {
+const SideBarMenuComponent = ({ name, list, isSelected }) => {
   return (
     <div className='menu'>
       {name === IMPORTANT ? (

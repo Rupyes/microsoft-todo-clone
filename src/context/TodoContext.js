@@ -44,22 +44,32 @@ export const TodoContextProvider = ({ children }) => {
     }
     return [];
   };
-
+  const todoTaskCompletedList = todoList.filter((td) => td.isChecked === true);
+  const todoMyDayList = [];
+  const todoPlannedList = [];
+  const todoAssignedList = [];
+  const defaultMenuList = {
+    todoMyDayList,
+    todoPlannedList,
+    todoAssignedList,
+    todoImpList,
+    todoTaskList,
+  };
   return (
     <TodoContext.Provider
       value={{
+        defaultMenuList,
         todoList,
-        todoTaskList,
         setTodoList,
         toggleImportant,
         taskCompleted,
         addToList,
-        todoImpList,
         isSearching,
         setIsSearching,
         searchText,
         setSearchText,
         getSearchedTodos,
+        todoTaskCompletedList,
       }}
     >
       {children}

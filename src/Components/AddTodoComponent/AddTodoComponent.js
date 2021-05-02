@@ -1,17 +1,20 @@
 import { Row, Col, Input, Radio } from 'antd';
 import React, { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { useTodoContextValue } from '../TodoContext';
-import './ComponentStyle.css';
+import './AddTodoStyle.css';
+import { useTodoContextValue } from '../../context/TodoContext';
+import { useSelectedMenuValue } from '../../context/SelectedMenuContext';
+import { IMPORTANT } from '../../constant';
 
 const AddTodoComponent = () => {
   const { addToList } = useTodoContextValue();
+  const { selectedMenu } = useSelectedMenuValue();
   const [task, setTask] = useState('');
   const added = (task) => {
     addToList({
       uid: Date.now(),
       task,
-      isImportant: false,
+      isImportant: selectedMenu['title'] === IMPORTANT ? true : false,
       isChecked: false,
       createdOn: Date.now(),
       isDue: false,
@@ -23,9 +26,14 @@ const AddTodoComponent = () => {
     <Row className='addTaskRow'>
       <Col className='addTaskIconCol'>
         {!task ? (
-          <PlusOutlined style={{ fontSize: '22px' }} />
+          <PlusOutlined style={{ fontSize: '18px' }} />
         ) : (
-          task && <Radio onClick={() => added(task)} />
+          task && (
+            <Radio
+              style={{ margin: 0, padding: 0 }}
+              onClick={() => added(task)}
+            />
+          )
         )}
       </Col>
       <Col className='addTaskInput'>
@@ -35,6 +43,7 @@ const AddTodoComponent = () => {
           value={task}
           onChange={(e) => setTask(e.target.value)}
           onPressEnter={() => added(task)}
+          bordered={false}
         />
       </Col>
     </Row>

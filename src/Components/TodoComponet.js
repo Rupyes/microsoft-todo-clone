@@ -1,15 +1,10 @@
 import { CheckCircleFilled, StarFilled, StarOutlined } from '@ant-design/icons';
 import { Col, Radio, Row } from 'antd';
 import React from 'react';
+import { useTodoContextValue } from '../context/TodoContext';
 
-const TodoComponet = ({
-  uid,
-  task,
-  isImportant,
-  isChecked,
-  taskCompleted,
-  toggleImportant,
-}) => {
+const TodoComponet = ({ uid, task, isImportant, isChecked }) => {
+  const { taskCompleted, toggleImportant } = useTodoContextValue();
   return (
     <Row
       style={{

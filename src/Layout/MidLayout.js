@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Typography } from 'antd';
-import AddTodoComponent from '../Components/AddTodoComponent';
-import CompletedTodosComponent from '../Components/CompletedTodosComponent';
+import AddTodoComponent from '../Components/AddTodoComponent/AddTodoComponent';
 import TodosComponent from '../Components/TodosComponent';
-import { useTodoContextValue } from '../TodoContext';
+import { useTodoContextValue } from '../context/TodoContext';
+import { useSelectedMenuValue } from '../context/SelectedMenuContext';
+import { TASKS } from '../constant';
 
 const { Title } = Typography;
 const MidLayout = () => {
-  const { isSearching, getSearchedTodos } = useTodoContextValue();
+  const {
+    isSearching,
+    defaultMenuList,
+    todoTaskCompletedList,
+  } = useTodoContextValue();
+  const { selectedMenu } = useSelectedMenuValue();
   return (
     <div
       style={{
@@ -17,22 +23,32 @@ const MidLayout = () => {
       }}
     >
       {isSearching ? (
-        <TodosComponent isCompletedList={false} searchList={true} />
+        <TodosComponent searchList={true} />
+      ) : !Object.keys(selectedMenu).length ? (
+        'Welcome'
       ) : (
         <>
           <Title style={{ color: '#fff', fontWeight: 'bold' }} level={3}>
-            Tasks
+            {selectedMenu.title}
           </Title>
-          <div
-            style={{
-              overflowY: 'auto',
-              padding: '5px',
-              flex: 1,
-              marginBottom: '10px',
-            }}
-          >
-            <TodosComponent isCompletedList={false} />
-            <CompletedTodosComponent isCompletedList={true} />
+          <div className='todoContainer'>
+            {selectedMenu.title === TASKS ? (
+              <>
+                <TodosComponent
+                  isCompletedList={false}
+                  list={defaultMenuList.todoTaskList}
+                />
+                <TodosComponent
+                  isCompletedList={true}
+                  list={todoTaskCompletedList}
+                />
+              </>
+            ) : (
+              <TodosComponent
+                isCompletedList={false}
+                list={defaultMenuList.todoImpList}
+              />
+            )}
           </div>
           <AddTodoComponent />
         </>

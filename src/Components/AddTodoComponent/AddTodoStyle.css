@@ -1,0 +1,24 @@
+.addTaskRow {
+  background: green;
+  display: flex;
+  border-radius: 5px;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.addTaskIconCol {
+  flex: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.addTaskInput {
+  flex: 1;
+}
+
+.addTaskInput input {
+  border: none;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}

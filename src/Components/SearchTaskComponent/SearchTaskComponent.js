@@ -1,8 +1,8 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Col, Input, Row } from 'antd';
+import { Input } from 'antd';
 import './SearchTaskStyle.css';
-import React, { useState } from 'react';
-import { useTodoContextValue } from '../../TodoContext';
+import React from 'react';
+import { useTodoContextValue } from '../../context/TodoContext';
 
 const SearchTaskComponent = () => {
   const { searchText, setSearchText, setIsSearching } = useTodoContextValue();
@@ -18,10 +18,10 @@ const SearchTaskComponent = () => {
 
   return (
     <div className='searchRow'>
-      <div class='inputIcon'>
+      <div className='inputIcon'>
         <SearchOutlined />
       </div>
-      <div class='inputSearch'>
+      <div className='inputSearch'>
         <Input
           type='text'
           value={searchText}

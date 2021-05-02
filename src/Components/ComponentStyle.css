@@ -1,17 +1,3 @@
-.sidebarMenu ul {
-  padding: 0;
-  margin: 0;
-}
-
-.sidebarMenu ul li {
-  list-style: none;
-}
-
-.sidebarMenu ul li:hover {
-  background-color: aliceblue;
-  cursor: pointer;
-}
-
 .completedBadge {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -21,26 +7,4 @@
   padding: 5px;
   color: #fff;
   border-radius: 5px;
-}
-
-.addTaskRow {
-  background: green;
-  border-radius: 5px;
-}
-.addTaskIconCol {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
-
-.addTaskInput {
-  display: flex;
-  justify-content: center;
-}
-
-.addTaskInput input {
-  background: none;
-  border: none;
-  color: #fff;
 }

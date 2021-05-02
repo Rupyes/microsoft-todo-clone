@@ -1,0 +1,17 @@
+.sidebarMenu ul {
+  padding: 0;
+  margin: 0;
+}
+
+.sidebarMenu ul li {
+  list-style: none;
+}
+
+.sidebarMenu ul li:hover {
+  background-color: aliceblue;
+  cursor: pointer;
+}
+
+.menuSelected {
+  background-color: aqua;
+}

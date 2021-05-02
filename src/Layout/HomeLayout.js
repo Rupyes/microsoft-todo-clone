@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Layout.css';
 import { Layout } from 'antd';
 import MidLayout from './MidLayout';
-import SideBarMenuListComponent from '../Components/SideBarMenuListComponent';
+import SideBarMenuListComponent from '../Components/SideBarMenuListComponent/SideBarMenuListComponent';
 
 const { Content, Sider } = Layout;
 
