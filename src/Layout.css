@@ -1,0 +1,20 @@
+.sider_left {
+  background: #eee;
+  padding: 15px;
+}
+
+.midcontent {
+  background: #558b2f;
+  color: #fff;
+  padding: 15px;
+}
+
+.sider_right {
+  background-color: #eee;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 0;
+  overflow-x: hidden;
+  transition: 0.2s;
+}
