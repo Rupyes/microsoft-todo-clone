@@ -1,29 +1,14 @@
 import { CheckCircleFilled, StarFilled, StarOutlined } from '@ant-design/icons';
 import { Col, Radio, Row } from 'antd';
 import React from 'react';
-import { useTodoContextValue } from '../context/TodoContext';
+import { useTodoContextValue } from '../../context/TodoContext';
+import './TodoStyle.css';
 
-const TodoComponet = ({ uid, task, isImportant, isChecked }) => {
+const TodoComponent = ({ uid, task, isImportant, isChecked }) => {
   const { taskCompleted, toggleImportant } = useTodoContextValue();
   return (
-    <Row
-      style={{
-        background: '#fff',
-        borderRadius: '5px',
-        color: '#000',
-        paddingTop: '2px',
-        paddingBottom: '2px',
-        marginBottom: '1px',
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
-      <Col
-        flex='none'
-        style={{
-          padding: '10px',
-        }}
-      >
+    <Row className='todoRow'>
+      <Col className='checkCol'>
         {!isChecked ? (
           <Radio
             onClick={() => taskCompleted(uid)}
@@ -32,7 +17,8 @@ const TodoComponet = ({ uid, task, isImportant, isChecked }) => {
         ) : (
           <CheckCircleFilled
             onClick={() => taskCompleted(uid)}
-            style={{ padding: 0, margin: 0, fontSize: '18px', color: 'green' }}
+            className='checkIcon'
+            color='green'
             checked
           />
         )}
@@ -40,20 +26,15 @@ const TodoComponet = ({ uid, task, isImportant, isChecked }) => {
       <Col flex='auto'>
         {!isChecked ? task : <strike style={{ color: 'gray' }}>{task}</strike>}
       </Col>
-      <Col
-        flex='none'
-        style={{
-          padding: '10px',
-        }}
-      >
+      <Col className='colImp'>
         <span
           onClick={() => toggleImportant(uid)}
           style={{ cursor: 'pointer' }}
         >
           {isImportant ? (
-            <StarFilled style={{ color: 'green', fontSize: '18px' }} />
+            <StarFilled className='starIcon' color='green' />
           ) : (
-            <StarOutlined style={{ fontSize: '18px' }} />
+            <StarOutlined className='starIcon' />
           )}
         </span>
       </Col>
@@ -61,4 +42,4 @@ const TodoComponet = ({ uid, task, isImportant, isChecked }) => {
   );
 };
 
-export default TodoComponet;
+export default TodoComponent;

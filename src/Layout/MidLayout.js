@@ -1,10 +1,10 @@
 import React from 'react';
 import { Typography } from 'antd';
 import AddTodoComponent from '../Components/AddTodoComponent/AddTodoComponent';
-import TodosComponent from '../Components/TodosComponent';
 import { useTodoContextValue } from '../context/TodoContext';
 import { useSelectedMenuValue } from '../context/SelectedMenuContext';
 import { TASKS } from '../constant';
+import TodoListComponent from '../Components/TodoListComponent/TodoListComponent';
 
 const { Title } = Typography;
 const MidLayout = () => {
@@ -20,10 +20,11 @@ const MidLayout = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        minWidth: '300px',
       }}
     >
       {isSearching ? (
-        <TodosComponent searchList={true} />
+        <TodoListComponent searchList={true} />
       ) : !Object.keys(selectedMenu).length ? (
         'Welcome'
       ) : (
@@ -34,17 +35,17 @@ const MidLayout = () => {
           <div className='todoContainer'>
             {selectedMenu.title === TASKS ? (
               <>
-                <TodosComponent
+                <TodoListComponent
                   isCompletedList={false}
                   list={defaultMenuList.todoTaskList}
                 />
-                <TodosComponent
+                <TodoListComponent
                   isCompletedList={true}
                   list={todoTaskCompletedList}
                 />
               </>
             ) : (
-              <TodosComponent
+              <TodoListComponent
                 isCompletedList={false}
                 list={defaultMenuList.todoImpList}
               />
