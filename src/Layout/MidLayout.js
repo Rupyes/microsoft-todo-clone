@@ -20,6 +20,7 @@ const MidLayout = () => {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        padding: '15px',
         minWidth: '300px',
       }}
     >

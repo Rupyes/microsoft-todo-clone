@@ -4,10 +4,10 @@ import React from 'react';
 import { useTodoContextValue } from '../../context/TodoContext';
 import './TodoStyle.css';
 
-const TodoComponent = ({ uid, task, isImportant, isChecked }) => {
+const TodoComponent = ({ uid, task, isImportant, isChecked, active }) => {
   const { taskCompleted, toggleImportant } = useTodoContextValue();
   return (
-    <Row className='todoRow'>
+    <Row className={active ? 'todoRow active' : 'todoRow'}>
       <Col className='checkCol'>
         {!isChecked ? (
           <Radio

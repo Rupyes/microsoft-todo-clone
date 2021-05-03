@@ -6,17 +6,26 @@
 .midcontent {
   background: #558b2f;
   color: #fff;
-  padding: 15px;
+  transition: 0.3s;
 }
 
 .sider_right {
-  background-color: #eee;
+  background-color: #fff;
   position: fixed;
   right: 0;
   top: 0;
-  width: 0;
-  overflow-x: hidden;
-  transition: 0.2s;
+  height: 100%;
+  width: 0px;
+  z-index: 1;
+  transition: 0.3s;
+  padding-top: 15px;
+}
+.resize250 {
+  margin-right: 250px;
+}
+
+.sider_show {
+  width: 250px;
 }
 
 .todoContainer {

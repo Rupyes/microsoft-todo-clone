@@ -1,0 +1,29 @@
+.editWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.editMain {
+  flex: 1;
+}
+
+.editFooter {
+  flex: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.footIcon {
+  flex: 0;
+  padding: 5px;
+}
+.info {
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  font-size: 10px;
+}

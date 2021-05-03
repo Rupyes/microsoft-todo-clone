@@ -6,7 +6,14 @@ export const TodoContextProvider = ({ children }) => {
   const [searchText, setSearchText] = useState('');
   const [todoList, setTodoList] = useState([]);
 
+  const [selectedTodo, setSelectedTodo] = useState();
+
   const [isSearching, setIsSearching] = useState(false);
+
+  const deleteTodo = (uid) => {
+    const new_todolist = todoList.filter((td) => td.uid !== uid);
+    setTodoList([...new_todolist]);
+  };
 
   const addToList = (task) => {
     setTodoList([task, ...todoList]);
@@ -70,6 +77,9 @@ export const TodoContextProvider = ({ children }) => {
         setSearchText,
         getSearchedTodos,
         todoTaskCompletedList,
+        selectedTodo,
+        setSelectedTodo,
+        deleteTodo,
       }}
     >
       {children}

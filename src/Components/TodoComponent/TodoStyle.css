@@ -21,3 +21,7 @@
 .checkIcon {
   font-size: 18px;
 }
+
+.active {
+  opacity: 0.8;
+}
