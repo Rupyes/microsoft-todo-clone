@@ -23,6 +23,11 @@ export const TodoContextProvider = ({ children }) => {
     const new_todoList = todoList.map((todo) => {
       if (todo['uid'] === uid) {
         todo['isChecked'] = !todo['isChecked'];
+        if (todo['isChecked']) {
+          todo['completedOn'] = Date.now();
+        } else {
+          todo['completedOn'] = null;
+        }
       }
       return todo;
     });
@@ -37,6 +42,16 @@ export const TodoContextProvider = ({ children }) => {
       return todo;
     });
     setTodoList([...new_todoList]);
+  };
+
+  const updateTodo = (updatedTodo) => {
+    console.log('updating...');
+    todoList.map((todo) => {
+      if (todo.uid === updateTodo.uid) {
+        return { ...updatedTodo };
+      }
+      return todo;
+    });
   };
 
   const todoImpList = todoList.filter(
@@ -67,6 +82,7 @@ export const TodoContextProvider = ({ children }) => {
       value={{
         defaultMenuList,
         todoList,
+        updateTodo,
         setTodoList,
         toggleImportant,
         taskCompleted,

@@ -1,16 +1,11 @@
 import React from 'react';
-import { useLayoutValue } from '../../context/LayoutContext';
+
 import { useTodoContextValue } from '../../context/TodoContext';
 import TodoComponent from '../TodoComponent/TodoComponent';
 import './TodoListStyle.css';
 
 const TodoListComponent = ({ isCompletedList, searchList, list }) => {
-  const { setHideSider } = useLayoutValue();
-  const {
-    getSearchedTodos,
-    selectedTodo,
-    setSelectedTodo,
-  } = useTodoContextValue();
+  const { getSearchedTodos, selectedTodo } = useTodoContextValue();
   let displayList = list;
   if (searchList) {
     displayList = getSearchedTodos();
@@ -24,18 +19,12 @@ const TodoListComponent = ({ isCompletedList, searchList, list }) => {
         </h5>
       )}
       {displayList &&
-        displayList.map((td) => (
-          <div
-            key={td['uid']}
-            onClick={() => {
-              setSelectedTodo(td);
-              setHideSider(false);
-            }}
-          >
-            {selectedTodo?.uid === td.uid ? (
-              <TodoComponent {...td} active />
+        displayList.map((todo) => (
+          <div key={todo['uid']}>
+            {selectedTodo?.uid === todo.uid ? (
+              <TodoComponent todo={todo} active />
             ) : (
-              <TodoComponent {...td} />
+              <TodoComponent todo={todo} />
             )}
           </div>
         ))}

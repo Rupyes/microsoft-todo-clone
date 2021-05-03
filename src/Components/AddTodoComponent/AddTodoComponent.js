@@ -17,8 +17,12 @@ const AddTodoComponent = () => {
       isImportant: selectedMenu['title'] === IMPORTANT ? true : false,
       isChecked: false,
       createdOn: Date.now(),
+      completedOn: null,
       isDue: false,
       dueDate: null,
+      steps: [],
+      isMyDay: false,
+      note: '',
     });
     setTask('');
   };
