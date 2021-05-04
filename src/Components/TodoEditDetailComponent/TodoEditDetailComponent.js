@@ -67,6 +67,8 @@ const TodoEditDetailComponent = () => {
       }
     } else if ('RENAME_TASK' === option) {
       selectedTodo.task = valueObj.new_task;
+    } else if ('ADD_NOTE' === option) {
+      selectedTodo.note = valueObj.note;
     }
     setSelectedTodo({ ...selectedTodo });
     updateTodo(selectedTodo);
@@ -204,6 +206,10 @@ const TodoEditDetailComponent = () => {
           placeholder='Add Note'
           bordered={false}
           autoSize={true}
+          value={selectedTodo?.note}
+          onChange={(e) =>
+            updateSelectedTodo('ADD_NOTE', { note: e.target.value })
+          }
         />
 
         <hr />
