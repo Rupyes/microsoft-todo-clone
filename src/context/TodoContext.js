@@ -28,6 +28,11 @@ export const TodoContextProvider = ({ children }) => {
         } else {
           todo['completedOn'] = null;
         }
+        setSelectedTodo({
+          ...selectedTodo,
+          isChecked: todo.isChecked,
+          completedOn: todo.completedOn,
+        });
       }
       return todo;
     });
@@ -38,6 +43,10 @@ export const TodoContextProvider = ({ children }) => {
     const new_todoList = todoList.map((todo) => {
       if (todo['uid'] === uid) {
         todo['isImportant'] = !todo['isImportant'];
+        setSelectedTodo({
+          ...selectedTodo,
+          isImportant: todo.isImportant,
+        });
       }
       return todo;
     });
@@ -45,20 +54,14 @@ export const TodoContextProvider = ({ children }) => {
   };
 
   const updateTodo = (updatedTodo) => {
-    console.log('updating...');
-    todoList.map((todo) => {
-      if (todo.uid === updateTodo.uid) {
-        return { ...updatedTodo };
+    const new_todoList = todoList.map((todo) => {
+      if (todo.uid === updatedTodo.uid) {
+        todo = { ...updatedTodo };
       }
       return todo;
     });
+    setTodoList([...new_todoList]);
   };
-
-  const todoImpList = todoList.filter(
-    (td) => td.isImportant === true && td.isChecked === false
-  );
-
-  const todoTaskList = todoList.filter((td) => td.isChecked === false);
 
   const getSearchedTodos = () => {
     if (todoList.length > 0) {
@@ -66,8 +69,11 @@ export const TodoContextProvider = ({ children }) => {
     }
     return [];
   };
-  const todoTaskCompletedList = todoList.filter((td) => td.isChecked === true);
-  const todoMyDayList = [];
+
+  const todoImpList = todoList.filter((td) => td.isImportant && !td.isChecked);
+  const todoTaskList = todoList.filter((td) => !td.isChecked);
+  const todoTaskCompletedList = todoList.filter((td) => td.isChecked);
+  const todoMyDayList = todoList.filter((td) => td.isMyDay && !td.isChecked);
   const todoPlannedList = [];
   const todoAssignedList = [];
   const defaultMenuList = {

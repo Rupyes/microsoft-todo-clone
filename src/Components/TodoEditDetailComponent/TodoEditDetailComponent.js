@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   BellOutlined,
   CalendarFilled,
   CheckCircleFilled,
+  CloseOutlined,
   DeleteOutlined,
   DribbbleOutlined,
   PaperClipOutlined,
@@ -16,7 +17,7 @@ import { useTodoContextValue } from '../../context/TodoContext';
 import './TodoEditDetailStyle.css';
 import { useLayoutValue } from '../../context/LayoutContext';
 import moment from 'moment';
-import { Input, Radio } from 'antd';
+import { Button, Input, Radio } from 'antd';
 
 const TodoEditDetailComponent = () => {
   const {
@@ -28,12 +29,13 @@ const TodoEditDetailComponent = () => {
     updateTodo,
   } = useTodoContextValue();
 
-  const [steps, setSteps] = useState(selectedTodo ? selectedTodo.steps : []);
   const [stepText, setStepText] = useState('');
 
   const addStep = () => {
     const step = { id: Date.now(), stepText, isChecked: false };
-    setSteps([step, ...steps]);
+    selectedTodo.steps = [step, ...selectedTodo.steps];
+    setSelectedTodo({ ...selectedTodo });
+    updateTodo(selectedTodo);
     setStepText('');
   };
 
@@ -49,15 +51,57 @@ const TodoEditDetailComponent = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (selectedTodo) {
-  //     selectedTodo.steps = steps;
-  // updateTodo(selectedTodo);
-  //   }
-  //   return () => {
-  //     setSteps([]);
-  //   };
-  // }, [selectedTodo]);
+  const updateSelectedTodo = (option, valueObj) => {
+    if (option === 'MYDAY') {
+      if (selectedTodo.isMyDay) {
+        const hours_diff = moment
+          .duration(moment(new Date()).diff(moment(selectedTodo.isMyDay)))
+          .asHours();
+        if (Math.floor(hours_diff) < 24) {
+          selectedTodo.isMyDay = null;
+        } else {
+          selectedTodo.isMyDay = Date.now();
+        }
+      } else {
+        selectedTodo.isMyDay = Date.now();
+      }
+    } else if ('RENAME_TASK' === option) {
+      selectedTodo.task = valueObj.new_task;
+    }
+    setSelectedTodo({ ...selectedTodo });
+    updateTodo(selectedTodo);
+  };
+
+  const checkStep = (id) => {
+    const new_steps = selectedTodo.steps.map((stp) => {
+      if (stp.id === id) {
+        stp.isChecked = !stp.isChecked;
+      }
+      return stp;
+    });
+    selectedTodo.steps = new_steps;
+    setSelectedTodo({ ...selectedTodo });
+    updateTodo(selectedTodo);
+  };
+
+  const deleteStep = (id) => {
+    const new_steps = selectedTodo.steps.filter((stp) => stp.id !== id);
+    selectedTodo.steps = new_steps;
+    setSelectedTodo({ ...selectedTodo });
+    updateTodo(selectedTodo);
+  };
+
+  const updateStepText = (id, text) => {
+    const new_steps = selectedTodo.steps.map((stp) => {
+      if (stp.id === id) {
+        stp.stepText = text;
+      }
+      return stp;
+    });
+    selectedTodo.steps = new_steps;
+    setSelectedTodo({ ...selectedTodo });
+    updateTodo(selectedTodo);
+  };
 
   return (
     <div className='editWrapper'>
@@ -70,7 +114,14 @@ const TodoEditDetailComponent = () => {
         ) : (
           <Radio onClick={() => taskCompleted(selectedTodo?.uid)} />
         )}
-        <Input type='text' bordered={false} value={selectedTodo?.task} />
+        <Input
+          type='text'
+          bordered={false}
+          value={selectedTodo?.task}
+          onChange={(e) =>
+            updateSelectedTodo('RENAME_TASK', { new_task: e.target.value })
+          }
+        />
         {selectedTodo?.isImportant ? (
           <StarFilled onClick={() => toggleImportant(selectedTodo?.uid)} />
         ) : (
@@ -78,10 +129,25 @@ const TodoEditDetailComponent = () => {
         )}
       </div>
       <div className='editMain'>
-        {/* {selectedTodo?.steps.length > 0 &&
-          selectedTodo.steps.map((step) => <li>{step.stepText}</li>)} */}
-        {steps.length > 0 &&
-          steps.map((step) => <li key={step.id}>{step.stepText}</li>)}
+        {selectedTodo?.steps.length > 0 &&
+          selectedTodo.steps.map((step) => (
+            <Input
+              key={step.id}
+              value={step.stepText}
+              className={step.isChecked ? 'strikeInput' : ''}
+              bordered={false}
+              onChange={(e) => updateStepText(step.id, e.target.value)}
+              prefix={
+                step.isChecked ? (
+                  <CheckCircleFilled onClick={() => checkStep(step.id)} />
+                ) : (
+                  <Radio onClick={() => checkStep(step.id)} />
+                )
+              }
+              suffix={<CloseOutlined onClick={() => deleteStep(step.id)} />}
+            />
+          ))}
+
         <div className='stepInput'>
           <Input
             type='text'
@@ -89,7 +155,9 @@ const TodoEditDetailComponent = () => {
             onChange={(e) => setStepText(e.target.value)}
             name='stepInput'
             bordered={false}
-            placeholder='Add Step'
+            placeholder={
+              selectedTodo?.steps.length > 0 ? 'Next Step' : 'Add Step'
+            }
             onPressEnter={addStep}
             prefix={
               <PlusOutlined
@@ -100,9 +168,16 @@ const TodoEditDetailComponent = () => {
           />
         </div>
         <hr />
-        <div className='editMenu'>
+        <div
+          className={
+            selectedTodo?.isMyDay ? 'editMenu edit_active' : 'editMenu'
+          }
+          onClick={() => updateSelectedTodo('MYDAY')}
+        >
           <DribbbleOutlined />
-          <span>Add to My Day</span>
+          <span>
+            {selectedTodo?.isMyDay ? 'Added to My Day' : 'Add to My Day'}
+          </span>
         </div>
         <hr />
         <div className='editMenu'>

@@ -3,7 +3,7 @@ import { Typography } from 'antd';
 import AddTodoComponent from '../Components/AddTodoComponent/AddTodoComponent';
 import { useTodoContextValue } from '../context/TodoContext';
 import { useSelectedMenuValue } from '../context/SelectedMenuContext';
-import { TASKS } from '../constant';
+import { MYDAY, TASKS } from '../constant';
 import TodoListComponent from '../Components/TodoListComponent/TodoListComponent';
 
 const { Title } = Typography;
@@ -45,6 +45,11 @@ const MidLayout = () => {
                   list={todoTaskCompletedList}
                 />
               </>
+            ) : selectedMenu.title === MYDAY ? (
+              <TodoListComponent
+                isCompletedList={false}
+                list={defaultMenuList.todoMyDayList}
+              />
             ) : (
               <TodoListComponent
                 isCompletedList={false}

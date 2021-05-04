@@ -21,7 +21,7 @@ const AddTodoComponent = () => {
       isDue: false,
       dueDate: null,
       steps: [],
-      isMyDay: false,
+      isMyDay: null,
       note: '',
     });
     setTask('');

@@ -12,10 +12,16 @@ import { useSelectedMenuValue } from '../../context/SelectedMenuContext';
 import SearchTaskComponent from '../SearchTaskComponent/SearchTaskComponent';
 import SideBarMenuComponent from '../SideBarMenuComponent/SideBarMenuComponent';
 import './SideBarMenuListStyle.css';
+import { useLayoutValue } from '../../context/LayoutContext';
 
 const SideBarMenuListComponent = () => {
-  const { defaultMenuList } = useTodoContextValue();
+  const {
+    defaultMenuList,
+    selectedTodo,
+    setSelectedTodo,
+  } = useTodoContextValue();
   const { selectedMenu, setSelectedMenu } = useSelectedMenuValue();
+  const { hideSider, setHideSider } = useLayoutValue();
   return (
     <div className='sidebarMenu'>
       <SearchTaskComponent />
@@ -23,7 +29,11 @@ const SideBarMenuListComponent = () => {
         {DEFAULT_MENUS.map((menu) => (
           <li
             key={menu.id}
-            onClick={() => setSelectedMenu(menu)}
+            onClick={() => {
+              setSelectedMenu(menu);
+              setSelectedTodo(null);
+              setHideSider(true);
+            }}
             className={selectedMenu.id === menu.id ? 'menuSelected' : ''}
           >
             <SideBarMenuComponent
