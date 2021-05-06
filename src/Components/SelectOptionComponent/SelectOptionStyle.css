@@ -1,0 +1,56 @@
+.select_menu {
+  z-index: 100;
+  position: fixed;
+  background-color: white;
+  color: #000;
+  margin: 0;
+  padding: 5px;
+  border-radius: 5px;
+  width: 215px;
+  box-shadow: gray 0px 0px 5px 0px;
+}
+.select_menu li {
+  list-style: none;
+  padding: 2px 10px 2px 10px;
+}
+
+.select_menu li:hover {
+  background-color: gray;
+  border-radius: 5px;
+  color: #fff;
+  background-color: green;
+}
+
+.select_menu button {
+  width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+
+.select_menu button .icon {
+  flex: 0;
+  margin-right: 5px;
+}
+
+.select_menu hr {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.btn_main {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn_datetime {
+  flex: 1;
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-end;
+}

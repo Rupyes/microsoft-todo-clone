@@ -19,7 +19,7 @@ const HomeLayout = () => {
         <MidLayout />
       </Content>
       <div className={hideSider ? 'sider_right' : 'sider_right sider_show'}>
-        <TodoEditDetailComponent />
+        {!hideSider && <TodoEditDetailComponent />}
       </div>
     </Layout>
   );

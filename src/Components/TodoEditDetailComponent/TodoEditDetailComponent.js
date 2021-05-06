@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   BellOutlined,
   CalendarFilled,
@@ -17,7 +17,8 @@ import { useTodoContextValue } from '../../context/TodoContext';
 import './TodoEditDetailStyle.css';
 import { useLayoutValue } from '../../context/LayoutContext';
 import moment from 'moment';
-import { Button, Input, Radio } from 'antd';
+import { Input, Radio } from 'antd';
+import SelectOptionComponent from '../SelectOptionComponent/SelectOptionComponent';
 
 const TodoEditDetailComponent = () => {
   const {
@@ -29,6 +30,10 @@ const TodoEditDetailComponent = () => {
     updateTodo,
   } = useTodoContextValue();
 
+  const [showRemindMeOption, setShowRemindMeOption] = useState(false);
+  const [showAddDueOption, setShowAddDueOption] = useState(false);
+  const [showRepeatOption, setShowRepeatOption] = useState(false);
+
   const [stepText, setStepText] = useState('');
 
   const addStep = () => {
@@ -39,9 +44,13 @@ const TodoEditDetailComponent = () => {
     setStepText('');
   };
 
+  const repeatOptionRef = useRef(null);
+  const addDueOptionRef = useRef(null);
+  const remindMeOptionRef = useRef(null);
+
   const getFormattedDate = (secs) => `${moment(secs).fromNow()}`;
 
-  const { setHideSider } = useLayoutValue();
+  const { hideSider, setHideSider } = useLayoutValue();
 
   const confirmDelete = () => {
     if (window.confirm(`"${selectedTodo.task}" will be deleted permanantly`)) {
@@ -104,6 +113,56 @@ const TodoEditDetailComponent = () => {
     setSelectedTodo({ ...selectedTodo });
     updateTodo(selectedTodo);
   };
+  const resetLocalState = () => {
+    setShowAddDueOption(false);
+    setShowRemindMeOption(false);
+    setShowRepeatOption(false);
+    setStepText('');
+  };
+
+  const handleClick = (e) => {
+    if (
+      showRepeatOption &&
+      repeatOptionRef &&
+      repeatOptionRef.current.contains(e.target)
+    ) {
+      console.log('clicked Inside 1');
+    } else if (
+      showRemindMeOption &&
+      remindMeOptionRef &&
+      remindMeOptionRef.current.contains(e.target)
+    ) {
+      console.log('clicked Inside 2');
+    } else if (
+      showAddDueOption &&
+      addDueOptionRef &&
+      addDueOptionRef.current.contains(e.target)
+    ) {
+      console.log('clicked Inside 3');
+    } else {
+      setShowRepeatOption(false);
+      setShowAddDueOption(false);
+      setShowRemindMeOption(false);
+    }
+  };
+
+  useEffect(() => {
+    if (showRepeatOption || showRemindMeOption || showAddDueOption) {
+      document.addEventListener('mousedown', handleClick);
+    } else {
+      document.removeEventListener('mousedown', handleClick);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, [showRepeatOption, showRemindMeOption, showAddDueOption]);
+
+  useEffect(() => {
+    return () => {
+      resetLocalState();
+      document.removeEventListener('mousedown', handleClick);
+    };
+  }, [hideSider]);
 
   return (
     <div className='editWrapper'>
@@ -182,15 +241,39 @@ const TodoEditDetailComponent = () => {
           </span>
         </div>
         <hr />
-        <div className='editMenu'>
+        <div ref={remindMeOptionRef}>
+          {showRemindMeOption && <SelectOptionComponent />}
+        </div>
+        <div
+          className='editMenu'
+          onClick={() => {
+            setShowRemindMeOption(true);
+          }}
+        >
           <BellOutlined />
           <span>Remind Me</span>
         </div>
-        <div className='editMenu'>
+        <div ref={addDueOptionRef}>
+          {showAddDueOption && <SelectOptionComponent />}
+        </div>
+        <div
+          className='editMenu'
+          onClick={() => {
+            setShowAddDueOption(true);
+          }}
+        >
           <CalendarFilled />
           <span>Add Due Date</span>
         </div>
-        <div className='editMenu'>
+        <div ref={repeatOptionRef}>
+          {showRepeatOption && <SelectOptionComponent />}
+        </div>
+        <div
+          className='editMenu'
+          onClick={() => {
+            setShowRepeatOption(true);
+          }}
+        >
           <RetweetOutlined />
           <span>Repeat</span>
         </div>
